@@ -10,11 +10,10 @@
 		83BB838B1C613FDF0023C72F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB838A1C613FDF0023C72F /* main.m */; };
 		83BB838E1C613FDF0023C72F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB838D1C613FDF0023C72F /* AppDelegate.m */; };
 		83BB83911C613FDF0023C72F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83901C613FDF0023C72F /* ViewController.m */; };
-		83BB83941C613FDF0023C72F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB83921C613FDF0023C72F /* Main.storyboard */; };
 		83BB83961C613FDF0023C72F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BB83951C613FDF0023C72F /* Assets.xcassets */; };
-		83BB83991C613FDF0023C72F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83BB83971C613FDF0023C72F /* LaunchScreen.storyboard */; };
 		83BB83A41C613FDF0023C72F /* HackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83A31C613FDF0023C72F /* HackTests.m */; };
 		83BB83AF1C613FDF0023C72F /* HackUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83AE1C613FDF0023C72F /* HackUITests.m */; };
+		83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D6D35B1C61498000669B8C /* SearchSpotify.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,9 +40,7 @@
 		83BB838D1C613FDF0023C72F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		83BB838F1C613FDF0023C72F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		83BB83901C613FDF0023C72F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		83BB83931C613FDF0023C72F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		83BB83951C613FDF0023C72F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		83BB83981C613FDF0023C72F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83BB839A1C613FDF0023C72F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83BB839F1C613FDF0023C72F /* HackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83BB83A31C613FDF0023C72F /* HackTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HackTests.m; sourceTree = "<group>"; };
@@ -51,6 +48,8 @@
 		83BB83AA1C613FDF0023C72F /* HackUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HackUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83BB83AE1C613FDF0023C72F /* HackUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HackUITests.m; sourceTree = "<group>"; };
 		83BB83B01C613FDF0023C72F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83D6D35A1C61498000669B8C /* SearchSpotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSpotify.h; sourceTree = "<group>"; };
+		83D6D35B1C61498000669B8C /* SearchSpotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSpotify.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,9 +104,9 @@
 				83BB838D1C613FDF0023C72F /* AppDelegate.m */,
 				83BB838F1C613FDF0023C72F /* ViewController.h */,
 				83BB83901C613FDF0023C72F /* ViewController.m */,
-				83BB83921C613FDF0023C72F /* Main.storyboard */,
+				83D6D35A1C61498000669B8C /* SearchSpotify.h */,
+				83D6D35B1C61498000669B8C /* SearchSpotify.m */,
 				83BB83951C613FDF0023C72F /* Assets.xcassets */,
-				83BB83971C613FDF0023C72F /* LaunchScreen.storyboard */,
 				83BB839A1C613FDF0023C72F /* Info.plist */,
 				83BB83891C613FDF0023C72F /* Supporting Files */,
 			);
@@ -243,9 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BB83991C613FDF0023C72F /* LaunchScreen.storyboard in Resources */,
 				83BB83961C613FDF0023C72F /* Assets.xcassets in Resources */,
-				83BB83941C613FDF0023C72F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +269,7 @@
 			files = (
 				83BB83911C613FDF0023C72F /* ViewController.m in Sources */,
 				83BB838E1C613FDF0023C72F /* AppDelegate.m in Sources */,
+				83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */,
 				83BB838B1C613FDF0023C72F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,25 +304,6 @@
 			targetProxy = 83BB83AB1C613FDF0023C72F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		83BB83921C613FDF0023C72F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				83BB83931C613FDF0023C72F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		83BB83971C613FDF0023C72F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				83BB83981C613FDF0023C72F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		83BB83B11C613FDF0023C72F /* Debug */ = {
@@ -496,6 +475,7 @@
 				83BB83B51C613FDF0023C72F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		83BB83B61C613FDF0023C72F /* Build configuration list for PBXNativeTarget "HackTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +484,7 @@
 				83BB83B81C613FDF0023C72F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		83BB83B91C613FDF0023C72F /* Build configuration list for PBXNativeTarget "HackUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +493,7 @@
 				83BB83BB1C613FDF0023C72F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
