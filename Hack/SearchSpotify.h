@@ -10,6 +10,6 @@
 
 @interface SearchSpotify : NSObject
 
-+(void) searchSpotifyFollowerCount:(NSString *) artist completion:(void (^) (NSNumber * followerCount)) completion;
++(void) searchSpotifyFollowerCount:(NSString *) artist completion:(void (^) (NSArray * artists)) completion;
 
 @end

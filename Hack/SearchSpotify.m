@@ -10,7 +10,7 @@
 
 @implementation SearchSpotify
 
-+(void) searchSpotifyFollowerCount:(NSString *) artist completion:(void (^) (NSNumber * followerCount)) completion {
++(void) searchSpotifyFollowerCount:(NSString *) artist completion:(void (^) (NSArray * artists)) completion {
 
     NSString * searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/search?query=%@%@",
                                [artist stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
@@ -22,10 +22,6 @@
         setValue: @"application/json"
         forHTTPHeaderField: @"Accept"];
 
-    [request
-        setValue: @"Bearer BQBbJlBy0zpVDi9w6b2WoO4wH98Mu6jPRXDmzjodRzMrLXPIpRUXoX24-_WbVtFXL5ijFBaXUGRNejgWAJ48rXgjL1kpw8AOTygDRN0TDZ93f1EfCciDdRfQ18srWFAT7vcs4ava7Zp3HyE"
-        forHTTPHeaderField: @"Authorization"];
-
     NSLog(@"%@", request);
     NSLog(@"%@", request.allHTTPHeaderFields);
 
@@ -35,11 +31,11 @@
             return;
         }
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        NSNumber *followerCount = jsonResponse[@"artists"][@"items"][0][@"followers"][@"total"];
+        NSArray *artists = jsonResponse[@"artists"][@"items"];
 
         if (completion)
         {
-            completion(followerCount);
+            completion(artists);
         }
 
 

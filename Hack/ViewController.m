@@ -9,83 +9,74 @@
 #import "ViewController.h"
 #import "SearchSpotify.h"
 
-@interface ViewController ()
 
+@interface ViewController ()
+<
+    UISearchResultsUpdating,
+    UITableViewDataSource,
+    UITableViewDelegate
+>
+@property UISearchController *searchController;
+@property UITableView *tableView;
+@property NSArray *artists;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    [self addTextField];
+
     self.view.backgroundColor = [UIColor redColor];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style: UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"identifier"];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    self.tableView.frame = self.view.bounds;
 }
 
--(void)addTextField{
-    // This allocates a label
-    UILabel *prefixLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-    //This sets the label text
-    prefixLabel.text =@"Artist: ";
-    // This sets the font for the label
-    [prefixLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    // This fits the frame to size of the text
-    [prefixLabel sizeToFit];
+#pragma mark UISearchResultsUpdating
 
-    // This allocates the textfield and sets its frame
-    UITextField *textField = [[UITextField  alloc] initWithFrame:
-                              CGRectMake(20, 50, 280, 30)];
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+//    NSLog(@"%@", searchController.searchBar.text);
+    if (![searchController.searchBar.text length]) {
+        return;
+    }
 
-    // This sets the border style of the text field
-    textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.contentVerticalAlignment =
-    UIControlContentVerticalAlignmentCenter;
-    [textField setFont:[UIFont boldSystemFontOfSize:12]];
+    [SearchSpotify searchSpotifyFollowerCount:searchController.searchBar.text completion:^(NSArray *artists) {
+        self.artists = artists;
 
-    //Placeholder text is displayed when no text is typed
-    textField.placeholder = @"Kygo";
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
 
-    //Prefix label is set as left view and the text starts after that
-    textField.leftView = prefixLabel;
-
-    //It set when the left prefixLabel to be displayed
-    textField.leftViewMode = UITextFieldViewModeAlways;
-
-    // Adds the textField to the view.
-    [self.view addSubview:textField];
-
-    // sets the delegate to the current class
-    textField.delegate = self;
 }
 
+#pragma mark UITableViewDataSource
 
-// This method is called once we click inside the textField
--(void)textFieldDidBeginEditing:(UITextField *)textField{
-    NSLog(@"Text field did begin editing");
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.artists count];
 }
 
-// This method is called once we complete editing
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    NSLog(@"Text field ended editing");
-//    textField.text
-    [SearchSpotify searchSpotifyFollowerCount: textField.text
-     completion:^(NSNumber *followerCount) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             textField.text = [followerCount stringValue];
-         });
-     }];
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
+
+    cell.textLabel.text = self.artists[indexPath.row][@"name"];
+    return cell;
 }
 
-// This method enables or disables the processing of return key
--(BOOL) textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
+#pragma mark UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", self.artists[indexPath.row][@"name"]);
 }
-
 
 @end
