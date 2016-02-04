@@ -14,6 +14,7 @@
 		83BB83A41C613FDF0023C72F /* HackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83A31C613FDF0023C72F /* HackTests.m */; };
 		83BB83AF1C613FDF0023C72F /* HackUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83AE1C613FDF0023C72F /* HackUITests.m */; };
 		83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D6D35B1C61498000669B8C /* SearchSpotify.m */; };
+		83D96B071C63D51E002DE011 /* artistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D96B061C63D51E002DE011 /* artistsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,8 @@
 		83BB83B01C613FDF0023C72F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83D6D35A1C61498000669B8C /* SearchSpotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSpotify.h; sourceTree = "<group>"; };
 		83D6D35B1C61498000669B8C /* SearchSpotify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSpotify.m; sourceTree = "<group>"; };
+		83D96B051C63D51E002DE011 /* artistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = artistsViewController.h; sourceTree = "<group>"; };
+		83D96B061C63D51E002DE011 /* artistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = artistsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +107,8 @@
 				83BB838D1C613FDF0023C72F /* AppDelegate.m */,
 				83BB838F1C613FDF0023C72F /* ViewController.h */,
 				83BB83901C613FDF0023C72F /* ViewController.m */,
+				83D96B051C63D51E002DE011 /* artistsViewController.h */,
+				83D96B061C63D51E002DE011 /* artistsViewController.m */,
 				83D6D35A1C61498000669B8C /* SearchSpotify.h */,
 				83D6D35B1C61498000669B8C /* SearchSpotify.m */,
 				83BB83951C613FDF0023C72F /* Assets.xcassets */,
@@ -269,6 +274,7 @@
 			files = (
 				83BB83911C613FDF0023C72F /* ViewController.m in Sources */,
 				83BB838E1C613FDF0023C72F /* AppDelegate.m in Sources */,
+				83D96B071C63D51E002DE011 /* artistsViewController.m in Sources */,
 				83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */,
 				83BB838B1C613FDF0023C72F /* main.m in Sources */,
 			);

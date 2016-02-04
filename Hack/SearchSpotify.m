@@ -10,13 +10,13 @@
 
 @implementation SearchSpotify
 
-+(void) searchSpotifyFollowerCount:(NSString *) artist completion:(void (^) (NSArray * artists)) completion {
++(void) searchSpotifyFollowerCount:(NSString *) searchText category:(NSString *) category completion:(void (^) (NSArray * artists)) completion {
 
-    NSString * searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/search?query=%@%@",
-                               [artist stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
-                               @"&offset=0&limit=2&type=artist&market=US"];
+    NSString *searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/search?query=%@&offset=0&limit=2&type=%@&market=US",
+                              [searchText stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
+                              [category lowercaseString]];
 
-    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString: searchString]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString: searchString]];
 
     [request
         setValue: @"application/json"
@@ -31,11 +31,13 @@
             return;
         }
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        NSArray *artists = jsonResponse[@"artists"][@"items"];
+
+        NSArray *searchResults = jsonResponse[[[category lowercaseString] stringByAppendingString:@"s"]][@"items"];
+
 
         if (completion)
         {
-            completion(artists);
+            completion(searchResults);
         }
 
 
