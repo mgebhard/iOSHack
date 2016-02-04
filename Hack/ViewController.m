@@ -59,15 +59,27 @@
         return;
     }
 
-    [SearchSpotify searchSpotifyFollowerCount:searchController.searchBar.text
-                                     category: self.category
-                                   completion:^(NSArray *artists) {
-        self.artists = artists;
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
+    [SearchSpotify getArtistsId:searchController.searchBar.text completion:^(NSString *artistIds) {
+        [SearchSpotify getArtistsAlbumsIDs:artistIds completion:^(NSMutableSet *albumIds) {
+            if ([albumIds count]) {
+                [SearchSpotify getAlbumReleaseDates:albumIds completion:^(NSDictionary *albumMappings) {
+                    NSLog(@"%@", searchController.searchBar.text);
+                }];
+            } else { return; }
+        }];
     }];
+
+
+//    [SearchSpotify searchSpotifyFollowerCount:searchController.searchBar.text
+//                                     category: self.category
+//                                   completion:^(NSArray *artists) {
+//        self.artists = artists;
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//        });
+//    }];
 
 }
 
