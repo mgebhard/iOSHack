@@ -13,7 +13,7 @@
 +(void) searchSpotifyFollowerCount:(NSString *) searchText category:(NSString *) category completion:(void (^) (NSArray * artists)) completion;
 +(void) getArtistsAlbumsIDs: (NSString *) artistID completion:(void (^) (NSMutableSet * albumIds)) completion;
 +(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs completion:(void (^) (NSMutableDictionary * albumMappings)) completion;
-+(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSString *artistIds)) completion;
++(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSMutableArray *artistIds)) completion;
 +(NSString *) getURLJoinedIds: (NSArray *) albumIds;
 +(void) sendAsyncAPICall: (NSString *) urlSearchString
        completionHandler:(void(^) (NSData * _Nullable data,

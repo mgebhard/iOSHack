@@ -31,7 +31,7 @@
 
 
 //4AK6F7OLvEQ5QYCBNiQWHq One Direction
-+(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSString *artistIds)) completion {
++(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSMutableArray *artistIds)) completion {
     NSString *searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/search?query=%@&offset=0&limit=2&type=%@&market=US",
                               [artistName stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
                               @"artist"];
@@ -42,13 +42,15 @@
 
         if (!data) { return; }
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        if ([jsonResponse[@"artists"][@"items"] count]) {
-            NSString *searchResults = jsonResponse[@"artists"][@"items"][0][@"id"];
-            NSLog(@"Computing days since \"%@'s\" last release", jsonResponse[@"artists"][@"items"][0][@"name"]);
-            if (completion)
-            {
-                completion(searchResults);
-            }
+        NSMutableArray *artistIds = [[NSMutableArray alloc] init];
+        for (NSDictionary *artistInfo in jsonResponse[@"artists"][@"items"]) {
+            NSString *artistId = artistInfo[@"id"];
+            NSLog(@"Computing days since \"%@'s\" last release", artistInfo[@"name"]);
+            [artistIds addObject:artistId];
+        }
+        if (completion)
+        {
+          completion(artistIds);
         }
     }];
 }

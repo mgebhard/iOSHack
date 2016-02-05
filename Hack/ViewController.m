@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.scope = @[@"Artist", @"Track", @"Album"];
+    self.scope = @[@"DROP DAY", @"Artist", @"Track", @"Album"];
     self.category = self.scope[0];
     self.view.backgroundColor = [UIColor redColor];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style: UITableViewStylePlain];
@@ -59,25 +59,27 @@
         return;
     }
 
-    [SearchSpotify getArtistsId:searchText completion:^(NSString *artistId) {
-        [SearchSpotify getArtistsAlbumsIDs:artistId completion:^(NSMutableSet *albumIds) {
-            if ([albumIds count]) {
-                [SearchSpotify getAlbumReleaseDates:albumIds completion:^(NSDictionary *albumMappings) {
+    if (self.category == self.scope[0]) {
+        [SearchSpotify getArtistsId:searchText completion:^(NSMutableArray *allId) {
+            for (NSString *artistId in allId) {
+                [SearchSpotify getArtistsAlbumsIDs:artistId completion:^(NSMutableSet *albumIds) {
+                    if ([albumIds count]) {
+                        [SearchSpotify getAlbumReleaseDates:albumIds completion:^(NSDictionary *albumMappings) {
+                        }];
+                    } else { return; }
                 }];
-            } else { return; }
+            }
         }];
-    }];
-
-
-//    [SearchSpotify searchSpotifyFollowerCount:searchText
-//                                     category: self.category
-//                                   completion:^(NSArray *artists) {
-//        self.artists = artists;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableView reloadData];
-//        });
-//    }];
-
+    } else {
+        [SearchSpotify searchSpotifyFollowerCount:searchText
+                                         category: self.category
+                                       completion:^(NSArray *artists) {
+            self.artists = artists;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }];
+    }
 }
 
 #pragma mark UISearchBarDelegate
@@ -102,10 +104,8 @@
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *image = [[UIImage alloc] initWithData:data];
 
-    self.imageView = [[UIImageView alloc]
-                      initWithFrame:CGRectMake(10, 10, 30, 40)];
-    self.imageView.image = image;
-    [cell addSubview:self.imageView];
+    cell.imageView.image = image;
+
 
     return cell;
 }
