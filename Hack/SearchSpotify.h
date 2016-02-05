@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ArtistsData.h"
 
 @interface SearchSpotify : NSObject
 
 +(void) searchSpotifyFollowerCount:(NSString *) searchText category:(NSString *) category completion:(void (^) (NSArray * artists)) completion;
 +(void) getArtistsAlbumsIDs: (NSString *) artistID completion:(void (^) (NSMutableSet * albumIds)) completion;
-+(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs completion:(void (^) (NSMutableDictionary * albumMappings)) completion;
-+(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSMutableArray *artistIds)) completion;
-+(NSString *) getURLJoinedIds: (NSArray *) albumIds;
++(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs  artistName:(NSString *) artistName completion:(void (^) (ArtistsData *albumMappings)) completion;
++(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSArray *artistIds)) completion;
++(NSString *) getURLJoinedIds: (NSMutableSet *) albumIds;
 +(void) sendAsyncAPICall: (NSString *) urlSearchString
        completionHandler:(void(^) (NSData * _Nullable data,
                                    NSURLResponse * _Nullable response,

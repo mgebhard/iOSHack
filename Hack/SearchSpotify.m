@@ -7,6 +7,8 @@
 //
 
 #import "SearchSpotify.h"
+#import <Spotify/Spotify.h>
+#import "ArtistsData.h"
 
 @implementation SearchSpotify
 
@@ -31,7 +33,7 @@
 
 
 //4AK6F7OLvEQ5QYCBNiQWHq One Direction
-+(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSMutableArray *artistIds)) completion {
++(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSArray *artistIds)) completion {
     NSString *searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/search?query=%@&offset=0&limit=2&type=%@&market=US",
                               [artistName stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
                               @"artist"];
@@ -39,25 +41,30 @@
                   completionHandler: ^void (NSData * data,
                                             NSURLResponse * _Nullable response,
                                             NSError * _Nullable error) {
-
+                      if (error) {return;}
         if (!data) { return; }
+
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        NSMutableArray *artistIds = [[NSMutableArray alloc] init];
+                      if (error) {return;}
+
+        NSArray *searchedArtist = [SPTArtist artistsFromData:data withResponse:response error: &error];
+//        NSArray *ahhhh = [SPTArtist artistFromDecodedJSON:jsonResponse error:nil];
+//        NSMutableDictionary *artistIds = [[NSMutableDictionary alloc] init];
         for (NSDictionary *artistInfo in jsonResponse[@"artists"][@"items"]) {
             NSString *artistId = artistInfo[@"id"];
-            NSLog(@"Computing days since \"%@'s\" last release", artistInfo[@"name"]);
-            [artistIds addObject:artistId];
+            NSString *artistName = artistInfo[@"name"];
+            NSLog(@"Computing days since \"%@'s\" last release", artistName);
+//            [artistIds setObject:artistId forKey:artistName];
         }
+//                      NSLog(@"%@", searchedArtist);
         if (completion)
         {
-          completion(artistIds);
+          completion(jsonResponse[@"artists"][@"items"]);
         }
     }];
 }
 
 
-
-//4AK6F7OLvEQ5QYCBNiQWHq One Direction
 +(void) getArtistsAlbumsIDs: (NSString *) artistID completion:(void (^) (NSMutableSet * albumIds)) completion {
     NSString *searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/artists/%@/albums", artistID];
     [SearchSpotify sendAsyncAPICall:searchString
@@ -66,6 +73,8 @@
                                             NSError * _Nullable error) {
         if (!data) { return; }
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+//                      NSString *artistURI = [@"spotify:artist:" stringByAppendingString: artistID];
+//                      NSURLRequest *iOSrequest = [SPTArtist createRequestForArtist:[NSURL URLWithString: artistURI] withAccessToken:nil error:nil];
 
         NSMutableSet * albumIDs = [[NSMutableSet alloc] init];
         [jsonResponse[@"items"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -78,10 +87,7 @@
     }];
 }
 
-
-//@"1gMxiQQSg5zeu4htBosASY", @"4gCNyS7pidfK3rKWhB3JOY"]
-//    "https://api.spotify.com/v1/albums?ids=1gMxiQQSg5zeu4htBosASY,4gCNyS7pidfK3rKWhB3JOY"
-+(void) getAlbumReleaseDates: (NSArray *) albumIDs completion:(void (^) (NSMutableDictionary * albumMappings)) completion {
++(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs  artistName:(NSString *) artistName completion:(void (^) (ArtistsData *albumMappings)) completion {
     NSString *joinedIds = [SearchSpotify getURLJoinedIds: albumIDs];
     NSString *searchString = [NSString stringWithFormat: @"https://api.spotify.com/v1/albums?ids=%@", joinedIds];
     [SearchSpotify sendAsyncAPICall:searchString
@@ -90,38 +96,19 @@
                                             NSError * _Nullable error) {
         if (!data) { return; }
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-
-        NSMutableDictionary * albumMappings = [[NSMutableDictionary alloc] init];
-        NSDate *currentLatestDate = [NSDate distantPast];
-        NSString *newestAlbum = @"";
-        for (NSDictionary *obj in jsonResponse[@"albums"]){
-            NSString *albumName = obj[@"name"];
-            NSString *releaseDate = obj[@"release_date"];
-            NSDateFormatter *format = [[NSDateFormatter alloc] init];
-            [format setDateFormat:@"yyyy-MM-dd"];
-            NSDate *dateObj = [format dateFromString:releaseDate];
-            NSDate *temp = [dateObj laterDate:currentLatestDate];
-            if (![currentLatestDate isEqualToDate:temp]) {
-                currentLatestDate = temp;
-                newestAlbum = albumName;
-            }
-            [albumMappings setValue:dateObj forKey:albumName];
-        }
-
-        double secPerDay =  86400;
-        NSLog(@"It has been %f days since the \"%@\" album release which dropped on %@", (currentLatestDate.timeIntervalSinceNow/secPerDay), newestAlbum, currentLatestDate);
-//        timeIntervalSinceNow
-//        [jsonResponse[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop, NSDate *currentLatestDate) {
-//        }];
+        ArtistsData *newReleaseData = [[ArtistsData alloc] initWithAlbumDictionary:jsonResponse[@"albums"] name:artistName];
 
         if (completion) {
-            completion(albumMappings);
+            completion(newReleaseData);
         }
 
     }];
 }
 
-+(NSString *) getURLJoinedIds: (NSArray *) albumIds {
+//        [jsonResponse[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop, NSDate *currentLatestDate) {
+//        }];
+
++(NSString *) getURLJoinedIds: (NSMutableSet *) albumIds {
     //    NSString *joinedIds = [albumIDs componentsJoinedByString:@","];
 
     NSString *joinedIds = [[NSString alloc] init];

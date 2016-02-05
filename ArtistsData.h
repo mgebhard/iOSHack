@@ -4,8 +4,14 @@
  * The `ArtistsData` class <#what does it do#>
  */
 @interface ArtistsData : NSObject
-@property NSString *artistsID;
-@property NSArray *albumIDs;
+@property NSDate *newestReleaseDate;
+@property double timeSinceLastRelease;
+@property NSDictionary *albumDateMappings;
+@property NSString *newestAlbumName;
+@property NSString *albumURL;
+@property NSString *artistName;
 
+
+- (instancetype) initWithAlbumDictionary: (NSArray *)  albumData name: (NSString *) name;
 
 @end

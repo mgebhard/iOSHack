@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "SearchSpotify.h"
-
+#import "NewReleaseViewController.h"
 
 @interface ViewController ()
 <
@@ -23,6 +23,8 @@
 @property NSString *category;
 @property UIImageView *imageView;
 @property NSArray *scope;
+@property NSMutableDictionary<NSString *,ArtistsData *> *dropDate;
+@property NSTimer *searchTimer;
 @end
 
 @implementation ViewController
@@ -59,12 +61,28 @@
         return;
     }
 
+
+    [self.searchTimer invalidate];
+
+    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.3f target:self selector:@selector(performSearch) userInfo:nil repeats:NO];
+}
+
+- (void)performSearch {
+
+    NSString *searchText = self.searchController.searchBar.text;
+    
     if (self.category == self.scope[0]) {
-        [SearchSpotify getArtistsId:searchText completion:^(NSMutableArray *allId) {
-            for (NSString *artistId in allId) {
-                [SearchSpotify getArtistsAlbumsIDs:artistId completion:^(NSMutableSet *albumIds) {
+        [SearchSpotify getArtistsId:searchText completion:^(NSArray *allArtists) {
+            self.artists = allArtists;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+            self.dropDate = [[NSMutableDictionary alloc] init];
+            for (NSDictionary *artistData in allArtists) {
+                [SearchSpotify getArtistsAlbumsIDs: artistData[@"id"] completion:^(NSMutableSet *albumIds) {
                     if ([albumIds count]) {
-                        [SearchSpotify getAlbumReleaseDates:albumIds completion:^(NSDictionary *albumMappings) {
+                        [SearchSpotify getAlbumReleaseDates:albumIds artistName:artistData[@"name"] completion:^(ArtistsData *albumMappings) {
+                            [self.dropDate setObject:albumMappings forKey:albumMappings.artistName];
                         }];
                     } else { return; }
                 }];
@@ -89,7 +107,7 @@
 
 #pragma mark UITableViewDataSource
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.artists count] - 1;
+    return [self.artists count];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,7 +121,6 @@
     NSURL *url = [NSURL URLWithString:self.artists[indexPath.row][@"images"][0][@"url"]];
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *image = [[UIImage alloc] initWithData:data];
-
     cell.imageView.image = image;
 
 
@@ -112,7 +129,9 @@
 
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", self.artists[indexPath.row][@"name"]);
+    NewReleaseViewController *secondView = [[NewReleaseViewController alloc] init];
+    secondView.artistPageData = self.dropDate[self.artists[indexPath.row][@"name"]];
+    [self.navigationController pushViewController:secondView animated:YES];
 }
 
 @end
