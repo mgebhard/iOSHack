@@ -54,28 +54,25 @@
 #pragma mark UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-//    NSLog(@"%@", searchController.searchBar.text);
-    if (![searchController.searchBar.text length]) {
+    NSString *searchText = searchController.searchBar.text;
+    if (![searchText length]) {
         return;
     }
 
-
-    [SearchSpotify getArtistsId:searchController.searchBar.text completion:^(NSString *artistIds) {
-        [SearchSpotify getArtistsAlbumsIDs:artistIds completion:^(NSMutableSet *albumIds) {
+    [SearchSpotify getArtistsId:searchText completion:^(NSString *artistId) {
+        [SearchSpotify getArtistsAlbumsIDs:artistId completion:^(NSMutableSet *albumIds) {
             if ([albumIds count]) {
                 [SearchSpotify getAlbumReleaseDates:albumIds completion:^(NSDictionary *albumMappings) {
-                    NSLog(@"%@", searchController.searchBar.text);
                 }];
             } else { return; }
         }];
     }];
 
 
-//    [SearchSpotify searchSpotifyFollowerCount:searchController.searchBar.text
+//    [SearchSpotify searchSpotifyFollowerCount:searchText
 //                                     category: self.category
 //                                   completion:^(NSArray *artists) {
 //        self.artists = artists;
-//
 //        dispatch_async(dispatch_get_main_queue(), ^{
 //            [self.tableView reloadData];
 //        });
@@ -89,9 +86,8 @@
 }
 
 #pragma mark UITableViewDataSource
-
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.artists count];
+    return [self.artists count] - 1;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -14,4 +14,11 @@
 +(void) getArtistsAlbumsIDs: (NSString *) artistID completion:(void (^) (NSMutableSet * albumIds)) completion;
 +(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs completion:(void (^) (NSMutableDictionary * albumMappings)) completion;
 +(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSString *artistIds)) completion;
++(NSString *) getURLJoinedIds: (NSArray *) albumIds;
++(void) sendAsyncAPICall: (NSString *) urlSearchString
+       completionHandler:(void(^) (NSData * _Nullable data,
+                                   NSURLResponse * _Nullable response,
+                                   NSError * _Nullable error)) completionHandler;
++(void) setRequestHeaders: (NSMutableURLRequest *) request;
+
 @end
