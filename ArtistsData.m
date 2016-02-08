@@ -20,7 +20,7 @@ double const SecondsPerDay = 86400;
         if (![self.newestReleaseDate isEqualToDate:temp]) {
             self.newestReleaseDate = temp;
             self.newestAlbumName = albumName;
-            self.albumURL = obj[@"images"][0][@"url"];
+            self.albumeImageURL = [[NSURL alloc] initWithString:obj[@"images"][0][@"url"] relativeToURL: nil];
             self.albumURI = [[NSURL alloc] initWithString:obj[@"uri"] relativeToURL: nil];
         }
         [albumMappings setValue:dateObj forKey:albumName];

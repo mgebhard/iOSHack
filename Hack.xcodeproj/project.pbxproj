@@ -17,7 +17,6 @@
 		83D6D35E1C617AC200669B8C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D6D35D1C617AC200669B8C /* AVFoundation.framework */; };
 		83D6D3601C617AD100669B8C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D6D35F1C617AD100669B8C /* SystemConfiguration.framework */; };
 		83D6D3621C617D9800669B8C /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D6D3611C617D9800669B8C /* Spotify.framework */; };
-		83D96B071C63D51E002DE011 /* artistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D96B061C63D51E002DE011 /* artistsViewController.m */; };
 		83D96B0A1C63EC2D002DE011 /* ArtistsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D96B091C63EC2D002DE011 /* ArtistsData.m */; };
 		83EFC30C1C65326200E6A29C /* NewReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EFC30B1C65326200E6A29C /* NewReleaseViewController.m */; };
 /* End PBXBuildFile section */
@@ -59,8 +58,6 @@
 		83D6D35D1C617AC200669B8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		83D6D35F1C617AD100669B8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83D6D3611C617D9800669B8C /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
-		83D96B051C63D51E002DE011 /* artistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = artistsViewController.h; sourceTree = "<group>"; };
-		83D96B061C63D51E002DE011 /* artistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = artistsViewController.m; sourceTree = "<group>"; };
 		83D96B081C63EC2D002DE011 /* ArtistsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArtistsData.h; path = ../ArtistsData.h; sourceTree = "<group>"; };
 		83D96B091C63EC2D002DE011 /* ArtistsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArtistsData.m; path = ../ArtistsData.m; sourceTree = "<group>"; };
 		83EFC30A1C65326200E6A29C /* NewReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewReleaseViewController.h; sourceTree = "<group>"; };
@@ -129,8 +126,6 @@
 				83D96B091C63EC2D002DE011 /* ArtistsData.m */,
 				83EFC30A1C65326200E6A29C /* NewReleaseViewController.h */,
 				83EFC30B1C65326200E6A29C /* NewReleaseViewController.m */,
-				83D96B051C63D51E002DE011 /* artistsViewController.h */,
-				83D96B061C63D51E002DE011 /* artistsViewController.m */,
 				83D6D35A1C61498000669B8C /* SearchSpotify.h */,
 				83D6D35B1C61498000669B8C /* SearchSpotify.m */,
 				83BB83951C613FDF0023C72F /* Assets.xcassets */,
@@ -297,7 +292,6 @@
 				83BB83911C613FDF0023C72F /* ViewController.m in Sources */,
 				83BB838E1C613FDF0023C72F /* AppDelegate.m in Sources */,
 				83D96B0A1C63EC2D002DE011 /* ArtistsData.m in Sources */,
-				83D96B071C63D51E002DE011 /* artistsViewController.m in Sources */,
 				83EFC30C1C65326200E6A29C /* NewReleaseViewController.m in Sources */,
 				83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */,
 				83BB838B1C613FDF0023C72F /* main.m in Sources */,

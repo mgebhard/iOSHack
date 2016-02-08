@@ -56,19 +56,15 @@
 #pragma mark UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchText = searchController.searchBar.text;
-    if (![searchText length]) {
+    if (![searchController.searchBar.text length]) {
         return;
     }
 
-
     [self.searchTimer invalidate];
-
     self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.3f target:self selector:@selector(performSearch) userInfo:nil repeats:NO];
 }
 
 - (void)performSearch {
-
     NSString *searchText = self.searchController.searchBar.text;
     
     if (self.category == self.scope[0]) {
@@ -122,7 +118,6 @@
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *image = [[UIImage alloc] initWithData:data];
     cell.imageView.image = image;
-
 
     return cell;
 }

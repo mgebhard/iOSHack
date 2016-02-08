@@ -8,7 +8,7 @@
 @property double timeSinceLastRelease;
 @property NSDictionary *albumDateMappings;
 @property NSString *newestAlbumName;
-@property NSString *albumURL;
+@property NSURL *albumeImageURL;
 @property NSString *artistName;
 @property NSURL *albumURI;
 @property NSURL *trackURI;

@@ -2,54 +2,65 @@
 #import <Spotify/Spotify.h>
 #import "AppDelegate.h"
 
-@interface NewReleaseViewController () <SPTAudioStreamingDelegate, SPTAuthViewDelegate>
+@interface NewReleaseViewController () <
+                                        SPTAudioStreamingDelegate,
+                                        SPTAudioStreamingPlaybackDelegate,
+                                        SPTAuthViewDelegate
+                                        >
 @property (nonatomic, strong) SPTAudioStreamingController *player;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *label;
 @end
 
 @implementation NewReleaseViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionUpdatedNotification:) name:@"sessionUpdated" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sessionUpdatedNotification:)
+                                                 name:@"sessionUpdated"
+                                               object:nil];
 
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    scrollView.backgroundColor = [UIColor whiteColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 175, 175)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height, scrollView.frame.size.width, 100)];
-    label.text = [[NSString alloc] initWithFormat: @"It has been %f days since \nthe \"%@\" album by %@ \nwhich dropped on %@", self.artistPageData.timeSinceLastRelease, self.artistPageData.newestAlbumName, self.artistPageData.artistName, self.artistPageData.newestReleaseDate];
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.numberOfLines = 5;
-    NSURL *url = [NSURL URLWithString:self.artistPageData.albumURL];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *image = [[UIImage alloc] initWithData:data];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.scrollView.backgroundColor = [UIColor whiteColor];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 175, 175)];
+    self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, self.imageView.frame.size.height, self.scrollView.frame.size.width, 100)];
+    self.label.text = [[NSString alloc] initWithFormat: @"It has been %f days since \nthe \"%@\" album by %@ \nwhich dropped on %@",
+                       self.artistPageData.timeSinceLastRelease,
+                       self.artistPageData.newestAlbumName,
+                       self.artistPageData.artistName,
+                       self.artistPageData.newestReleaseDate];
+    self.label.lineBreakMode = NSLineBreakByWordWrapping;
+    self.label.numberOfLines = 5;
 
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:self.artistPageData.albumeImageURL]];
 
+    // Ugly code to resize image
     CGRect rect = CGRectMake(0,0,175,175);
     UIGraphicsBeginImageContext(rect.size);
     [image drawInRect:rect];
     UIImage *picture1 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
     NSData *imageData = UIImagePNGRepresentation(picture1);
     UIImage *img=[UIImage imageWithData:imageData];
-    imageView.image = img;
 
-    [self.view addSubview:scrollView];
-    [scrollView addSubview:imageView];
-    [scrollView insertSubview:label belowSubview:imageView];
+    self.imageView.image = img;
 
-//    self.session = [(AppDelegate *)[[UIApplication sharedApplication] delegate] session];
-//    self.player = [(AppDelegate *)[[UIApplication sharedApplication] delegate] player];
-//    // Call the -playUsingSession: method to play a track
-//    [self playUsingSession:self.session];
+    [self.view addSubview:self.scrollView];
+    [self.scrollView addSubview:self.imageView];
+    [self.scrollView insertSubview:self.label belowSubview:self.imageView];
+
+
     SPTAuth *auth = [SPTAuth defaultInstance];
     if (auth.session && [auth.session isValid]) {
         [self playUsingSession:auth.session];
     }
-
-
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 -(void)handleNewSession {
     SPTAuth *auth = [SPTAuth defaultInstance];
@@ -74,13 +85,12 @@
     if(self.navigationController.topViewController == self) {
         SPTAuth *auth = [SPTAuth defaultInstance];
         if (auth.session && [auth.session isValid]) {
-            [self playUsingSession:auth.session];
+            [self handleNewSession];
         }
     }
 }
 
 -(void)playUsingSession:(SPTSession *)session {
-
     // Create a new player if needed
     if (self.player == nil) {
         self.player = [[SPTAudioStreamingController alloc] initWithClientId:[SPTAuth defaultInstance].clientID];
@@ -105,12 +115,7 @@
 #pragma mark - Track Player Delegates
 
 - (void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceiveMessage:(NSString *)message {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message from Spotify"
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
+    NSLog(@"Message from Spotify %@: ", message);
 }
 
 - (void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didFailToPlayTrack:(NSURL *)trackUri {
@@ -119,12 +124,47 @@
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeToTrack:(NSDictionary *)trackMetadata {
     NSLog(@"track changed = %@", [trackMetadata valueForKey:SPTAudioStreamingMetadataTrackURI]);
-//    [self updateUI];
 }
 
 - (void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying {
     NSLog(@"is playing = %d", isPlaying);
 }
+
+#pragma mark SPTAuthViewDelegate
+
+/**
+ The user logged in successfully.
+
+ @param authenticationViewController The view controller.
+ @param session The session object with the new credentials. (Note that the session object in
+	the `SPTAuth` object passed upon initialization is also updated)
+ */
+- (void) authenticationViewController:(SPTAuthViewController *)authenticationViewController
+                  didLoginWithSession:(SPTSession *)session {
+    NSLog(@"Successful login");
+
+}
+
+/**
+ An error occured while logging in
+
+ @param authenticationViewController The view controller.
+ @param error The error (Note that the session object in the `SPTAuth` object passed upon initialization
+	is cleared.)
+ */
+- (void) authenticationViewController:(SPTAuthViewController *)authenticationViewController
+                       didFailToLogin:(NSError *)error {
+    NSLog(@"Fail login");
+}
+
+/**
+ User closed the login dialog.
+ @param authenticationViewController The view controller.
+ */
+- (void) authenticationViewControllerDidCancelLogin:(SPTAuthViewController *)authenticationViewController {
+    NSLog(@"User cancel login");
+}
+
 
 
 @end
