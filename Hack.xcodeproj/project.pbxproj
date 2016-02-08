@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83698BCA1C6956B000BE7764 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BC91C6956B000BE7764 /* next.png */; };
+		83698BCC1C6956BE00BE7764 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BCB1C6956BE00BE7764 /* pause.png */; };
+		83698BCE1C6956CB00BE7764 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BCD1C6956CB00BE7764 /* play.png */; };
+		83698BD01C6956D800BE7764 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BCF1C6956D800BE7764 /* previous.png */; };
 		83BB838B1C613FDF0023C72F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB838A1C613FDF0023C72F /* main.m */; };
 		83BB838E1C613FDF0023C72F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB838D1C613FDF0023C72F /* AppDelegate.m */; };
 		83BB83911C613FDF0023C72F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BB83901C613FDF0023C72F /* ViewController.m */; };
@@ -39,6 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		83698BC91C6956B000BE7764 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = ../../../Downloads/ic_skip_next_black_24dp/ios/ic_skip_next.imageset/next.png; sourceTree = "<group>"; };
+		83698BCB1C6956BE00BE7764 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = ../../../Downloads/ic_pause_circle_outline_black_24dp/ios/ic_pause_circle_outline.imageset/pause.png; sourceTree = "<group>"; };
+		83698BCD1C6956CB00BE7764 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../../../Downloads/ic_play_arrow_black_24dp/ios/ic_play_arrow.imageset/play.png; sourceTree = "<group>"; };
+		83698BCF1C6956D800BE7764 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous.png; path = ../../../Downloads/ic_skip_previous_black_24dp/ios/ic_skip_previous.imageset/previous.png; sourceTree = "<group>"; };
+		83B747FC1C691926007D11CC /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		83BB83861C613FDF0023C72F /* Hack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83BB838A1C613FDF0023C72F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		83BB838C1C613FDF0023C72F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +101,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83698BC31C69533A00BE7764 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83698BC41C69534C00BE7764 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		83698BC41C69534C00BE7764 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		83BB837D1C613FDF0023C72F = {
 			isa = PBXGroup;
 			children = (
@@ -125,10 +149,16 @@
 				83D96B081C63EC2D002DE011 /* ArtistsData.h */,
 				83D96B091C63EC2D002DE011 /* ArtistsData.m */,
 				83EFC30A1C65326200E6A29C /* NewReleaseViewController.h */,
+				83698BC91C6956B000BE7764 /* next.png */,
+				83698BCF1C6956D800BE7764 /* previous.png */,
+				83B747FC1C691926007D11CC /* Config.h */,
+				83698BCD1C6956CB00BE7764 /* play.png */,
+				83698BCB1C6956BE00BE7764 /* pause.png */,
 				83EFC30B1C65326200E6A29C /* NewReleaseViewController.m */,
 				83D6D35A1C61498000669B8C /* SearchSpotify.h */,
 				83D6D35B1C61498000669B8C /* SearchSpotify.m */,
 				83BB83951C613FDF0023C72F /* Assets.xcassets */,
+				83698BC31C69533A00BE7764 /* Resources */,
 				83BB839A1C613FDF0023C72F /* Info.plist */,
 				83BB83891C613FDF0023C72F /* Supporting Files */,
 			);
@@ -264,7 +294,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83698BCA1C6956B000BE7764 /* next.png in Resources */,
+				83698BCE1C6956CB00BE7764 /* play.png in Resources */,
+				83698BD01C6956D800BE7764 /* previous.png in Resources */,
 				83BB83961C613FDF0023C72F /* Assets.xcassets in Resources */,
+				83698BCC1C6956BE00BE7764 /* pause.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

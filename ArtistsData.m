@@ -27,17 +27,15 @@ double const SecondsPerDay = 86400;
     }
     
     self.albumDateMappings = albumMappings;
-    self.timeSinceLastRelease = self.newestReleaseDate.timeIntervalSinceNow/SecondsPerDay;
     self.artistName = name;
 
     [SPTAlbum albumWithURI:self.albumURI accessToken:nil market:nil callback:^(NSError *error, id object) {
-        NSLog(@"%@", object);
-        //        SPTAlbum *album = ((SPTAlbum *) object);
-        //        NSArray<SPTPartialTrack *> *tracks = album.tracksForPlayback;
+        self.trackURIs = [[NSMutableArray alloc] init];
         if ([object respondsToSelector:@selector(tracksForPlayback)]) {
-            NSArray<SPTPartialTrack *> *tracks = [object performSelector:@selector(tracksForPlayback)];
-            NSLog(@"%@", tracks);
-            self.trackURI = [tracks[0] performSelector:@selector(playableUri)];
+            self.tracksOnNewestAlbum = [object performSelector:@selector(tracksForPlayback)];
+            for (SPTPartialTrack *track in self.tracksOnNewestAlbum) {
+                [self.trackURIs addObject:track.playableUri];
+            }
         }
      }];
 

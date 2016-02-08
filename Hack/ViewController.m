@@ -124,9 +124,11 @@
 
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewReleaseViewController *secondView = [[NewReleaseViewController alloc] init];
-    secondView.artistPageData = self.dropDate[self.artists[indexPath.row][@"name"]];
-    [self.navigationController pushViewController:secondView animated:YES];
+    if (self.category == self.scope[0]) {
+        NewReleaseViewController *secondView = [[NewReleaseViewController alloc] init];
+        secondView.artistPageData = self.dropDate[self.artists[indexPath.row][@"name"]];
+        [self.navigationController pushViewController:secondView animated:YES];
+    }
 }
 
 @end

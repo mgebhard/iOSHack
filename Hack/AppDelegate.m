@@ -1,6 +1,7 @@
 #import <Spotify/Spotify.h>
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "Config.h"
 
 @interface AppDelegate ()
 
@@ -16,10 +17,21 @@
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;
 
-    [[SPTAuth defaultInstance] setClientID:@"ef5fd858801c49fc9e9385dbaf13f5e3"];
-    [[SPTAuth defaultInstance] setRedirectURL:[NSURL URLWithString:@"megans-hack-login://callback"]];
-    [[SPTAuth defaultInstance] setRequestedScopes:@[SPTAuthStreamingScope]];
+    // Set authentication properties
+    SPTAuth *auth = [SPTAuth defaultInstance];
+    auth.clientID = @kClientId;
+    auth.requestedScopes = @[SPTAuthStreamingScope];
+    auth.redirectURL = [NSURL URLWithString:@kCallbackURL];
 
+    #ifdef kTokenSwapServiceURL
+        auth.tokenSwapURL = [NSURL URLWithString:@kTokenSwapServiceURL];
+    #endif
+    #ifdef kTokenRefreshServiceURL
+        auth.tokenRefreshURL = [NSURL URLWithString:@kTokenRefreshServiceURL];
+    #endif
+
+    auth.tokenRefreshURL = @kSessionUserDefaultsKey;
+    
     // Construct a login URL and open it
     NSURL *loginURL = [[SPTAuth defaultInstance] loginURL];
 
@@ -27,7 +39,6 @@
     // an iOS bug, so we wait a bit before doing so.
     [application performSelector:@selector(openURL:)
                       withObject:loginURL afterDelay:0.1];
-
 
     return YES;
 }
