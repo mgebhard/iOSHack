@@ -10,7 +10,8 @@
 @property NSString *newestAlbumName;
 @property NSString *albumURL;
 @property NSString *artistName;
-
+@property NSURL *albumURI;
+@property NSURL *trackURI;
 
 - (instancetype) initWithAlbumDictionary: (NSArray *)  albumData name: (NSString *) name;
 

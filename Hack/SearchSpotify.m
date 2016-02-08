@@ -38,30 +38,19 @@
                               [artistName stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]],
                               @"artist"];
     [SearchSpotify sendAsyncAPICall:searchString
-                  completionHandler: ^void (NSData * data,
-                                            NSURLResponse * _Nullable response,
-                                            NSError * _Nullable error) {
-                      if (error) {return;}
-        if (!data) { return; }
+                  completionHandler: ^void (NSData * data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
-        NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                      if (error) {return;}
-
-        NSArray *searchedArtist = [SPTArtist artistsFromData:data withResponse:response error: &error];
+                      if (!data) { return; }
+                      NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                      if (error) { return; }
+                      if (completion)
+                      {
+                          completion(jsonResponse[@"artists"][@"items"]);
+                      }
+                  }];
+//        NSArray *searchedArtist = [SPTArtist artistsFromData:data withResponse:response error: &error];
+//        NSLog(@"%@", searchedArtist);
 //        NSArray *ahhhh = [SPTArtist artistFromDecodedJSON:jsonResponse error:nil];
-//        NSMutableDictionary *artistIds = [[NSMutableDictionary alloc] init];
-        for (NSDictionary *artistInfo in jsonResponse[@"artists"][@"items"]) {
-            NSString *artistId = artistInfo[@"id"];
-            NSString *artistName = artistInfo[@"name"];
-            NSLog(@"Computing days since \"%@'s\" last release", artistName);
-//            [artistIds setObject:artistId forKey:artistName];
-        }
-//                      NSLog(@"%@", searchedArtist);
-        if (completion)
-        {
-          completion(jsonResponse[@"artists"][@"items"]);
-        }
-    }];
 }
 
 
