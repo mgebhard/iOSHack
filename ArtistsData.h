@@ -11,9 +11,9 @@
 @property NSURL *albumeImageURL;
 @property NSString *artistName;
 @property NSURL *albumURI;
-@property NSArray <SPTPartialTrack *> *tracksOnNewestAlbum;
+//@property NSArray <SPTPartialTrack *> *tracksOnNewestAlbum;
 @property NSMutableArray <NSURL *> *trackURIs;
 
 - (instancetype) initWithAlbumDictionary: (NSArray *)  albumData name: (NSString *) name;
-
+- (NSString *) getCountUp;
 @end

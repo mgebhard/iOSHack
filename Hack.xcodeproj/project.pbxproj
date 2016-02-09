@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8348210E1C6A91910083E3C9 /* MusicControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8348210D1C6A91910083E3C9 /* MusicControlView.m */; };
 		83698BCA1C6956B000BE7764 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BC91C6956B000BE7764 /* next.png */; };
 		83698BCC1C6956BE00BE7764 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BCB1C6956BE00BE7764 /* pause.png */; };
 		83698BCE1C6956CB00BE7764 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 83698BCD1C6956CB00BE7764 /* play.png */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8348210C1C6A91910083E3C9 /* MusicControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicControlView.h; sourceTree = "<group>"; };
+		8348210D1C6A91910083E3C9 /* MusicControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicControlView.m; sourceTree = "<group>"; };
 		83698BC91C6956B000BE7764 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = ../../../Downloads/ic_skip_next_black_24dp/ios/ic_skip_next.imageset/next.png; sourceTree = "<group>"; };
 		83698BCB1C6956BE00BE7764 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = ../../../Downloads/ic_pause_circle_outline_black_24dp/ios/ic_pause_circle_outline.imageset/pause.png; sourceTree = "<group>"; };
 		83698BCD1C6956CB00BE7764 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../../../Downloads/ic_play_arrow_black_24dp/ios/ic_play_arrow.imageset/play.png; sourceTree = "<group>"; };
@@ -112,6 +115,10 @@
 		83698BC41C69534C00BE7764 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83698BCF1C6956D800BE7764 /* previous.png */,
+				83698BCD1C6956CB00BE7764 /* play.png */,
+				83698BCB1C6956BE00BE7764 /* pause.png */,
+				83698BC91C6956B000BE7764 /* next.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -149,12 +156,10 @@
 				83D96B081C63EC2D002DE011 /* ArtistsData.h */,
 				83D96B091C63EC2D002DE011 /* ArtistsData.m */,
 				83EFC30A1C65326200E6A29C /* NewReleaseViewController.h */,
-				83698BC91C6956B000BE7764 /* next.png */,
-				83698BCF1C6956D800BE7764 /* previous.png */,
-				83B747FC1C691926007D11CC /* Config.h */,
-				83698BCD1C6956CB00BE7764 /* play.png */,
-				83698BCB1C6956BE00BE7764 /* pause.png */,
 				83EFC30B1C65326200E6A29C /* NewReleaseViewController.m */,
+				8348210C1C6A91910083E3C9 /* MusicControlView.h */,
+				8348210D1C6A91910083E3C9 /* MusicControlView.m */,
+				83B747FC1C691926007D11CC /* Config.h */,
 				83D6D35A1C61498000669B8C /* SearchSpotify.h */,
 				83D6D35B1C61498000669B8C /* SearchSpotify.m */,
 				83BB83951C613FDF0023C72F /* Assets.xcassets */,
@@ -328,6 +333,7 @@
 				83D96B0A1C63EC2D002DE011 /* ArtistsData.m in Sources */,
 				83EFC30C1C65326200E6A29C /* NewReleaseViewController.m in Sources */,
 				83D6D35C1C61498000669B8C /* SearchSpotify.m in Sources */,
+				8348210E1C6A91910083E3C9 /* MusicControlView.m in Sources */,
 				83BB838B1C613FDF0023C72F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

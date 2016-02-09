@@ -2,6 +2,7 @@
 #import <Spotify/Spotify.h>
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "MusicControlView.h"
 
 @interface NewReleaseViewController () <
                                         SPTAudioStreamingDelegate,
@@ -14,10 +15,7 @@
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UILabel *fixedLabel;
 @property (nonatomic, strong) NSTimer *timer;
-@property UIButton *backbutton;
-@property UIButton *nextButton;
-@property UIButton *previousButton;
-@property UIButton *playButton;
+@property MusicControlView *musicControlView;
 
 @end
 
@@ -51,24 +49,8 @@
     self.label.numberOfLines = 3;
     self.label.textAlignment = NSTextAlignmentCenter;
 
-    self.backbutton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 50, self.label.frame.size.height + 210, 100, 30)];
-    self.backbutton.backgroundColor = [UIColor redColor];
-    [self.backbutton setTitle:@"Search" forState:UIControlStateNormal];
-    [self.backbutton addTarget:self action:@selector(goHome:) forControlEvents:UIControlEventTouchDown];
-
-    // Audio Control buttons
-    self.previousButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 80, self.backbutton.frame.origin.y + 40, 40, 40)];
-//    self.previousButton.backgroundColor = [UIColor redColor];
-    [self.previousButton addTarget:self action:@selector(rewind:) forControlEvents:UIControlEventTouchDown];
-    self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 20, self.backbutton.frame.origin.y + 40, 40, 40)];
-//    self.playButton.backgroundColor = [UIColor blackColor];
-    [self.playButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchDown];
-    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 + 40, self.backbutton.frame.origin.y + 40, 40, 40)];
-//    self.nextButton.backgroundColor = [UIColor redColor];
-    [self.nextButton addTarget:self action:@selector(fastForward:) forControlEvents:UIControlEventTouchDown];
-    [self.nextButton setImage:[UIImage imageNamed:@"next"] forState:0];
-    [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:0];
-    [self.previousButton setImage:[UIImage imageNamed:@"previous"] forState:0];
+    self.musicControlView = [[MusicControlView alloc] initWithFrame:self.view.frame];
+    self.musicControlView.delegate = self;
 
 
     UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:self.artistPageData.albumeImageURL]];
@@ -88,10 +70,7 @@
     [self.scrollView addSubview:self.imageView];
     [self.scrollView addSubview:self.fixedLabel];
     [self.scrollView insertSubview:self.label belowSubview:self.imageView];
-    [self.scrollView addSubview:self.backbutton];
-    [self.scrollView addSubview:self.previousButton];
-    [self.scrollView addSubview:self.playButton];
-    [self.scrollView addSubview:self.nextButton];
+    [self.scrollView addSubview:self.musicControlView];
 
     SPTAuth *auth = [SPTAuth defaultInstance];
     if (auth.session && [auth.session isValid]) {
@@ -119,13 +98,6 @@
     self.timer = nil;
 }
 
--(void) goHome: (id)sender {
-    NSLog(@"TRYING TO GO HOME");
-    [self.player logout:^(NSError *error) {
-        ViewController *secondView = [[ViewController alloc] init];
-        [self.navigationController pushViewController:secondView animated:YES];
-    }];
-}
 
 -(void) timerTick: (NSTimer *) timer {
     // Get conversion to months, days, hours, minutes, seconds
@@ -196,20 +168,20 @@
     }
 }
 
-#pragma mark AudioControl
-
--(void)rewind:(id)sender {
+#pragma mark MusicControlViewDelegate
+- (void) previousClicked: (id) sender {
     [self.player skipPrevious:nil];
 }
 
--(void)playPause:(id)sender {
+- (void) playClicked: (id) sender {
     [self.player setIsPlaying:!self.player.isPlaying callback:nil];
-    [self.playButton setImage:[UIImage imageNamed:self.player.isPlaying?@"play":@"pause"] forState:0];
+    [self.musicControlView setPlayImage:self.player.isPlaying?@"play":@"pause"];
 }
 
--(void)fastForward:(id)sender {
+- (void) nextClicked: (id) sender {
     [self.player skipNext:nil];
 }
+
 
 
 #pragma mark - Track Player Delegates

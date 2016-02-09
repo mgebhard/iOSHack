@@ -3,7 +3,6 @@
 #import <Spotify/Spotify.h>
 
 @implementation ArtistsData: NSObject
-double const SecondsPerDay = 86400;
 
 - (instancetype) initWithAlbumDictionary: (NSArray *)  albumData name: (NSString *) name{
     self = [super init];
@@ -29,20 +28,22 @@ double const SecondsPerDay = 86400;
     self.albumDateMappings = albumMappings;
     self.artistName = name;
 
-    [SPTAlbum albumWithURI:self.albumURI accessToken:nil market:nil callback:^(NSError *error, id object) {
-        self.trackURIs = [[NSMutableArray alloc] init];
-        if ([object respondsToSelector:@selector(tracksForPlayback)]) {
-            self.tracksOnNewestAlbum = [object performSelector:@selector(tracksForPlayback)];
-            for (SPTPartialTrack *track in self.tracksOnNewestAlbum) {
-                [self.trackURIs addObject:track.playableUri];
-            }
-        }
-     }];
-
-
-
     return self;
 }
 
+-(NSString *) getCountUp {
+    // Get conversion to months, days, hours, minutes, seconds
+    NSCalendarUnit unitFlags = NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitSecond;
+    NSDateComponents *breakdownInfo = [[NSCalendar currentCalendar] components:unitFlags fromDate:self.newestReleaseDate  toDate: [NSDate date]  options:0];
+    NSString *totalDate = [NSString stringWithFormat: @"%li years : %li months : %li days : %li hours : %li minutes", (long)[breakdownInfo year],
+                           (long)[breakdownInfo month], (long)[breakdownInfo day], (long)[breakdownInfo hour], (long)[breakdownInfo minute]];
+    NSArray <NSString *> *invalidDates = @[@"0 years : ", @"0 months : ", @"0 days : ", @"0 hours : ", @"0 minuts" ];
+    for (id parseZeroString in invalidDates) {
+        totalDate = [totalDate stringByReplacingOccurrencesOfString:parseZeroString withString:@""];
+    }
+
+    return totalDate;
+
+}
 
 @end

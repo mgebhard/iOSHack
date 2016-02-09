@@ -11,15 +11,15 @@
 
 @interface SearchSpotify : NSObject
 
-+(void) searchSpotifyFollowerCount:(NSString *) searchText category:(NSString *) category completion:(void (^) (NSArray * artists)) completion;
-+(void) getArtistsAlbumsIDs: (NSString *) artistID completion:(void (^) (NSMutableSet * albumIds)) completion;
-+(void) getAlbumReleaseDates: (NSMutableSet *) albumIDs  artistName:(NSString *) artistName completion:(void (^) (ArtistsData *albumMappings)) completion;
-+(void) getArtistsId: (NSString *) artistName completion:(void (^) (NSArray *artistIds)) completion;
-+(NSString *) getURLJoinedIds: (NSMutableSet *) albumIds;
-+(void) sendAsyncAPICall: (NSString *) urlSearchString
-       completionHandler:(void(^) (NSData * _Nullable data,
++(void) searchSpotifyFollowerCount:(NSString * _Nullable) searchText category:(NSString *_Nullable) category completion:(void (^_Nullable) (NSArray *_Nullable artists)) completion;
++(void) getArtistsAlbumsIDs: (NSString *_Nullable) artistID completion:(void (^_Nullable) (NSMutableSet * _Nullable albumIds)) completion;
++(void) getAlbumReleaseDates: (NSMutableSet *_Nullable) albumIDs  artistName:(NSString *_Nullable) artistName completion:(void (^_Nullable) (ArtistsData *_Nullable albumMappings)) completion;
++(void) getArtistsId: (NSString *_Nullable) artistName completion:(void (^_Nullable) (NSArray *_Nullable artistIds)) completion;
++(NSString *_Nullable) getURLJoinedIds: (NSMutableSet *_Nullable) albumIds;
++(void) sendAsyncAPICall: (NSString *_Nullable) urlSearchString
+       completionHandler:(void(^ _Nullable) (NSData * _Nullable data,
                                    NSURLResponse * _Nullable response,
                                    NSError * _Nullable error)) completionHandler;
-+(void) setRequestHeaders: (NSMutableURLRequest *) request;
++(void) setRequestHeaders: (NSMutableURLRequest * _Nullable) request;
 
 @end
